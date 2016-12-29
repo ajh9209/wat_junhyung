@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- interface ColMapper{} mapper를 관리하는 인터페이스 -->
+<mapper namespace="com.ppp.wat.col.ColMapper">
+	<!-- Col리스트 -->
+	<select id="list" resultType="ColDTO">
+		SELECT b_code, b_no, b_origin, b_title, b_id,	b_recommend, b_readcnt, b_newdate
+		FROM board
+		WHERE b_code = 'col'
+		ORDER BY b_no DESC
+	</select>
+
+	<!-- selectKey 태그의 order는 해당 쿼리문을 본 쿼리문 이전에 수행할 것인지, 이후에 수행할 것인지 정한다. -->
+	<!-- Col등록 -->
+	<insert id="create">
+		<selectKey keyProperty="b_no" resultType="int" order="BEFORE">
+			SELECT IFNULL(MAX(b_no), 0)+1 as b_no
+			FROM board
+		</selectKey>
+		INSERT INTO board(b_code, b_no, b_origin, b_reply, b_id,
+		                              b_title, b_content, b_recommend, b_readcnt,
+		                              b_downcnt, b_newdate)
+		VALUES('col', #{b_no},	#{b_no}, 0, #{b_id}, 
+		             #{b_title}, #{b_content}, 0, 0, 0, now())
+	</insert>
+	
+	<!-- Col조회 -->
+	<select id="read" resultType="ColDTO">
+		SELECT b_code, b_no, b_origin, b_reply, b_id,
+		                              b_title, b_content, b_recommend, b_readcnt,
+		                              b_downcnt, b_newdate, b_editdate
+		FROM board
+		WHERE b_no = #{b_no}
+	</select>
+	
+	<!-- Col삭제 -->
+	<delete id="delete" >
+		DELETE FROM board
+		WHERE b_no = #{b_no}
+	</delete>
+	
+	<!-- Col수정 -->	
+	<update id="update">
+		UPDATE board
+		SET b_title = #{b_title}, b_content = #{b_content}
+		WHERE b_no = #{b_no}	
+	</update>
+		
+
+</mapper>
