@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- interface RequestMapper{} mapper를 관리하는 인터페이스 -->
+<mapper namespace="com.ppp.wat.request.RequestMapper">
+
+	<!-- 프로젝트 의뢰 리스트-->
+	<select id="list" resultType="RequestDTO">
+		SELECT rq_no, rq_id, rq_title,
+		rq_newdate, rq_enddate, rq_state
+		FROM request
+		ORDER BY rq_no DESC
+	</select>
+
+
+	<!-- 프로젝트 의뢰 상세보기 -->
+	<select id="read" resultType="RequestDTO">
+		SELECT rq_no, rq_id, rq_title,
+		rq_content, rq_templete,
+		rq_newdate, rq_enddate, rq_state
+		FROM request
+		WHERE rq_no = #{rq_no}
+	</select>
+
+
+	<!-- 프로젝트 의뢰 등록 -->
+	<insert id="create">
+		<selectKey keyProperty="rq_no" resultType="int" order="BEFORE">
+			SELECT IFNULL(MAX(rq_no), 0)+1 as rq_no
+			FROM request
+		</selectKey>
+		INSERT INTO request(rq_no, rq_id, rq_title, rq_content, rq_templete,
+							rq_newdate, rq_enddate, rq_state)
+		VALUES(#{rq_no}, 'nayoung',	#{rq_title}, #{rq_content}, 'templete_nayoung1.png',
+				now(), #{rq_enddate}, 0 )
+	</insert>
+
+
+	<!-- 프로젝트 의뢰 삭제 -->
+	<delete id="delete">
+		DELETE FROM request
+		WHERE rq_no = #{rq_no}
+	</delete>
+
+
+	<!-- 프로젝트 의뢰 수정 -->
+	<update id="update">
+		UPDATE request
+		SET rq_title=#{rq_title},rq_content=#{rq_content}, rq_templete=#{rq_templete},
+			rq_enddate=#{rq_enddate}
+		WHERE rq_no = #{rq_no}
+	</update>
+
+
+	<!-- 프로젝트 팀장 신청 -->
+	<insert id="apply">
+		<selectKey keyProperty="ca_no" resultType="int" order="BEFORE">
+			SELECT IFNULL(MAX(ca_no), 0)+1 as ca_no
+			FROM chiefapplicant
+		</selectKey>
+		INSERT INTO chiefapplicant(ca_no, ca_rqno, ca_id, ca_price, ca_date,
+									ca_memo, ca_newdate, ca_select)
+		VALUES(#{ca_no}, #{ca_rqno}, 'habin', #{ca_price}, #{ca_date},
+				#{ca_memo}, now(), 0 )
+	</insert>
+
+
+</mapper>

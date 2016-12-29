@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- interface ChiefApplicantMapper{} mapper를 관리하는 인터페이스 -->
+<mapper namespace="com.ppp.wat.spapply.SpApplyMapper">
+
+	<!-- 팀원신청 리스트-->
+	<select id="list" resultType="SpApplyDTO">
+		SELECT spa_code, spa_no, spa_part, spa_id, 
+			   spa_memo, spa_select
+		FROM spapply
+		ORDER BY spa_no DESC
+	</select>
+
+
+	<!-- 팀원신청 상세보기 -->
+	<select id="read" resultType="SpApplyDTO">
+		SELECT spa_code, spa_no, spa_part, spa_id, 
+			   spa_memo, spa_select
+		FROM spapply
+		WHERE spa_no = #{spa_no}
+	</select>
+
+
+	<!-- 팀원신청 등록 -->
+	<insert id="create">
+		<selectKey keyProperty="spa_no" resultType="int" order="BEFORE">
+			SELECT IFNULL(MAX(spa_no), 0)+1 as spa_no
+			FROM spapply
+		</selectKey>
+		INSERT INTO spapply(spa_code, spa_no, spa_part, spa_id, 
+			  				spa_memo, spa_select)
+		VALUES(#{spa_code}, #{spa_no}, #{spa_part}, 'nayoung', 
+				#{spa_memo}, 0 )
+	</insert>
+
+
+	<!-- 팀원신청 삭제 -->
+	<delete id="delete">
+		DELETE FROM spapply
+		WHERE spa_no = #{spa_no}
+	</delete>
+
+
+	<!-- 팀원신청 수정 -->
+	<update id="update">
+		UPDATE spapply
+		SET spa_part=#{spa_part}, spa_memo=#{spa_memo}
+		WHERE spa_no = #{spa_no}
+	</update>
+
+
+
+</mapper>
