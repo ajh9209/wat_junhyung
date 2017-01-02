@@ -11,6 +11,9 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.ppp.wat.qna.QnaDTO;
+import com.ppp.wat.qna.QnaMapper;
+
 @Component
 public class QnaDAO {
 
@@ -37,7 +40,7 @@ public class QnaDAO {
 	}
 
 	
-	//공지사항 리스트
+	//qna 리스트
 	ArrayList<QnaDTO> list() {
 		// interface QnaMapper{}
 		QnaMapper mapper = sqlSession.getMapper(QnaMapper.class);
@@ -47,7 +50,7 @@ public class QnaDAO {
 	}// list() end
 
 	
-	//공지사항 등록
+	//qna 등록
 	int create(QnaDTO dto){
 		QnaMapper mapper = sqlSession.getMapper(QnaMapper.class);
 		int count = mapper.create(dto);
@@ -55,7 +58,7 @@ public class QnaDAO {
 	}// create() end
 	
 	
-	//공지사항 조회
+	//qna 조회
 	QnaDTO read(int b_no){
 		QnaMapper mapper = sqlSession.getMapper(QnaMapper.class);
 		QnaDTO dto = mapper.read(b_no);
@@ -63,19 +66,42 @@ public class QnaDAO {
 	}// create() end
 	
 	
-	//공지사항 삭제
+	//qna 삭제
 	int delete(int b_no){
 		QnaMapper mapper = sqlSession.getMapper(QnaMapper.class);
 		int count = mapper.delete(b_no);
 		return count;
 	}
 	
-	//공지사항 수정
+	//qna 수정
 	int update(QnaDTO dto){
 		QnaMapper mapper = sqlSession.getMapper(QnaMapper.class);
 		int count = mapper.update(dto);
 		return count;
 	}
+
+
+	//댓글등록
+		public int replyCreate(QnaDTO dto) {
+			QnaMapper mapper = sqlSession.getMapper(QnaMapper.class);
+			int res = mapper.replyCreate(dto);
+			return 0;
+		}
+
+		// 댓글목록
+		public ArrayList<QnaDTO> replyList(int b_no) {
+			QnaMapper mapper = sqlSession.getMapper(QnaMapper.class);
+			ArrayList<QnaDTO> list = mapper.replyList(b_no);
+			return list;
+		}
+		
+		//댓글 삭제
+			int replyDelete(int r_no){
+				QnaMapper mapper = sqlSession.getMapper(QnaMapper.class);
+				int count = mapper.replyDelete(r_no);
+				return count;
+			}
+		
 	
 	
 	

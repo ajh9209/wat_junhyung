@@ -2,6 +2,8 @@ package com.ppp.wat.qna;
 
 import java.util.ArrayList;
 
+import com.ppp.wat.qna.QnaDTO;
+
 public interface QnaMapper {
 	
 	//인터페이스. 추상메서드로만 존재하며 MyBatis3를 호출하기 편리하도록 지원
@@ -25,5 +27,13 @@ public interface QnaMapper {
 	
 	//<update id="update">
 	public int update(QnaDTO dto);
+	
+	public int replyCreate(QnaDTO dto);
+
+	public ArrayList<QnaDTO> replyList(int b_no);
+	// <replyList = "List">
+
+	public int replyDelete(int r_no);
+	// <replyDelete = "reply">
 	
 }

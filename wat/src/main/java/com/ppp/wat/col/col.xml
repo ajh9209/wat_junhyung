@@ -48,6 +48,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SET b_title = #{b_title}, b_content = #{b_content}
 		WHERE b_no = #{b_no}	
 	</update>
-		
+	
+	<!-- Col reply 삽입 -->
+	<insert id ="replyCreate"  parameterType ="ColDTO" >
+	<selectKey keyProperty="r_no" resultType="int" order="BEFORE">
+			SELECT IFNULL(MAX(r_no), 0)+1 as r_no
+			FROM reply
+		</selectKey>
+	INSERT INTO reply(r_no, r_bno, r_id, r_content, r_date)
+	VALUES(#{r_no}, #{b_no}, #{r_id}, #{r_content}, now())
+	
+	</insert>
+	
+	<!-- Col reply List -->	
+	<select id = "replyList"  resultType="ColDTO"  parameterType = "int">
+	SELECT r_no, r_bno, r_id, r_content, r_date
+	FROM reply
+	WHERE r_bno = #{b_no}
+	ORDER BY r_no ASC
+	
+	</select>
+	
+	<!-- Col reply삭제 -->
+	<delete id="replyDelete"  parameterType="int">
+		DELETE FROM reply
+		WHERE r_no = #{r_no}
+	</delete>
 
 </mapper>

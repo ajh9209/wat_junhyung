@@ -78,7 +78,6 @@ CREATE TABLE board(			-- °Ô½ÃÆÇ Tb
 	b_editdate  	 DATETIME      	 null
 );
 
-select * from reply;
 
 INSERT INTO 
 board(b_code, b_no, b_origin, b_reply, b_id, b_title, b_content, b_recommend, b_readcnt, b_downcnt, b_newdate)
@@ -424,3 +423,10 @@ ALTER TABLE sproject
    )
    on update cascade
    on delete cascade;
+   
+   ==============================================\
+   
+   select * from reply;
+   
+   DELETE FROM reply
+		WHERE r_no = 4;

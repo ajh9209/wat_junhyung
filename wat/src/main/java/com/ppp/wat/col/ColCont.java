@@ -51,7 +51,9 @@ public class ColCont {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("/col/read"); // /col/read.jsp
 		ColDTO dto = dao.read(b_no);
+		ArrayList<ColDTO>list =dao.replyList(b_no);
 		mav.addObject("dto", dto);
+		mav.addObject("list", list);
 		return mav;
 	}// read() end
 
@@ -88,5 +90,30 @@ public class ColCont {
 		int res = dao.update(dto);
 		return mav;
 	}// updateProc() end
-
+	
+	@RequestMapping(value = "/col/replyCreate.do", method = RequestMethod.POST)
+	public ModelAndView replyCreate(ColDTO dto) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("redirect:/col/read.do?b_no=" + dto.getB_no()); // /col/read.do
+		int res = dao.replyCreate(dto);
+		return mav;
+	}// replyCreate
+	
+	
+	@RequestMapping(value = "/col/replyDelete.do", method = RequestMethod.GET)
+	public ModelAndView replyDeleteForm(ColDTO dto) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("/col/replyDelete");
+		mav.addObject("dto", dto);
+		System.out.println("r_bno: " + dto.getR_bno());
+		return mav;
+	}// replyDelete() end
+	
+	@RequestMapping(value = "/col/replyDelete.do", method = RequestMethod.POST)
+	public ModelAndView replyDeleteProc(ColDTO dto) {
+		ModelAndView mav = new ModelAndView();
+		int res = dao.replyDelete(dto.getR_no());
+		mav.setViewName("redirect:/col/read.do?b_no=" + dto.getR_bno()); // /col/read.do
+		return mav;
+	}// replyDeleteProc() end
 }

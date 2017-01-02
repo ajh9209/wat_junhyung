@@ -1,29 +1,13 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="../header.jsp"%>
+<%@ include file="../cmuLeftTemp.jsp" %>
 <%
 	request.setCharacterEncoding("utf-8");
 %>
 
 <!-- body start -------------------------------------->
-<div class="section">
-	<div class="container">
-		<div class="col-md-2">
-			<div class="span3 sidebar">
-				<h4>community</h4>
-				<ul class="nav nav-tabs nav-stacked">
-					<li><a href="../col/list.do">칼럼</a></li>
-					<li><a href="../qna/list.do">Q&amp;A</a></li>
-				</ul>
-			</div>
-		</div>
-		<div class="col-md-7">
-			<div class="row-fluid" id="content">
-				<div class="span8 main">
-					<h3>칼럼목록</h3>
-				
-				
-				
+					<h3>칼럼목록</h3>				
 					<FORM name='frm' method='POST' action='./list.do'>
 					<input type="hidden" name="b_code" value="${dto.b_code }">
 		<TABLE class='table' style='text-align: center;'>
@@ -63,10 +47,5 @@
 				
 				
 					
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
 <!-- body end -------------------------------------->
 <%@ include file="../footer.jsp"%>

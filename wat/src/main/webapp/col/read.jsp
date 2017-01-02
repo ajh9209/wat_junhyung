@@ -1,31 +1,17 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="../header.jsp"%>
+<%@ include file="../cmuLeftTemp.jsp" %>
 <%
 	request.setCharacterEncoding("utf-8");
 %>
 
 <!-- body start -------------------------------------->
-<div class="section">
-	<div class="container">
-		<div class="col-md-2">
-			<div class="span3 sidebar">
-				<h4>community</h4>
-				<ul class="nav nav-tabs nav-stacked">
-					<li><a href="../col/list.do">칼럼</a></li>
-					<li><a href="../qna/list.do">Q&amp;A</a></li>
-				</ul>
-			</div>
-		</div>
-		<div class="col-md-7">
-			<div class="row-fluid" id="content">
-				<div class="span8 main">
 					<h3>칼럼</h3>
 					
 	<FORM name='frm' method='POST' action='./update.do'>
 		<div class='table'>
-			<table
-				style="text-align: center; padding-left: 30; padding-right: 30;">
+			<table class = 'table'>
 				<tr>
 					<th>번호</th>
 					<td>${dto.b_no }</td>
@@ -35,8 +21,12 @@
 					<td>${dto.b_id }</td>
 				</tr>
 				<tr>
-					<th>내용</th>
+					<th>제목</th>
 					<td>${dto.b_title }</td>
+				</tr>
+				<tr>
+					<th>내용</th>
+					<td>${dto.b_content }</td>
 				</tr>
 				<tr>
 					<th>등록일</th>
@@ -56,10 +46,48 @@
 					onclick="location.href='./delete.do?b_no=${dto.b_no }'">
 		</div>
 	</FORM>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
+	
+<FORM name='replyfrm' method='POST'  action='./replyCreate.do'>
+	<table class='table'>
+	<tr>
+		<td> <input type='text' name='r_id'> </td>
+		<td> <textarea name='r_content'></textarea> </td>
+		<td> <button type='submit'>등록</button> </td>
+		<td> <input type="hidden"  name='b_no'  value=${dto.b_no }> </td> 
+	</tr>	
+	
+	</table>
+</FORM>
+
+<table class = 'table'	>
+<c:forEach var="dto" items="${list }">			
+				<tr>
+
+					<td>${dto.r_id }</td>		
+					<td>${dto.r_content }</td>
+					<td>${dto.r_date }</td>
+					<td>
+						<form id="replyDeletefrm" action="replyDelete.do" method="POST">
+							<input type="hidden" name="r_no"  value="${dto.r_no }">
+							<input type="hidden" name="r_bno"  value="${dto.r_bno }">
+							<input type="button" value="삭제" onclick="replyDeleteFrom(${dto.r_no }, ${dto.r_bno } )">
+						</form>
+					</td>	
+				</tr>				
+			</c:forEach>
+			</table>
+
 <!-- body end -------------------------------------->
+<script>
+function replyDeleteFrom(r_no, r_bno){
+	    if (confirm("삭제하시겠습니까?!") == true) {
+	    	document.getElementById("replyDeletefrm").submit();
+	    } else {
+	    	window.close();
+	    }
+	
+	
+}
+
+</script>
 <%@ include file="../footer.jsp"%>

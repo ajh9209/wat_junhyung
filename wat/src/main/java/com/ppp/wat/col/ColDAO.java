@@ -63,7 +63,7 @@ public class ColDAO {
 	}// create() end
 	
 	
-	//°¥·³ »èÁ¦
+	//Ä®·³ »èÁ¦
 	int delete(int b_no){
 		ColMapper mapper = sqlSession.getMapper(ColMapper.class);
 		int count = mapper.delete(b_no);
@@ -76,6 +76,27 @@ public class ColDAO {
 		int count = mapper.update(dto);
 		return count;
 	}
+
+	//´ñ±Ûµî·Ï
+	public int replyCreate(ColDTO dto) {
+		ColMapper mapper = sqlSession.getMapper(ColMapper.class);
+		int res = mapper.replyCreate(dto);
+		return 0;
+	}
+
+	// ´ñ±Û¸ñ·Ï
+	public ArrayList<ColDTO> replyList(int b_no) {
+		ColMapper mapper = sqlSession.getMapper(ColMapper.class);
+		ArrayList<ColDTO> list = mapper.replyList(b_no);
+		return list;
+	}
+	
+	//´ñ±Û »èÁ¦
+		int replyDelete(int r_no){
+			ColMapper mapper = sqlSession.getMapper(ColMapper.class);
+			int count = mapper.replyDelete(r_no);
+			return count;
+		}
 	
 	
 	

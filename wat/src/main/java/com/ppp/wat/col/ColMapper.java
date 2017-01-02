@@ -25,5 +25,12 @@ public interface ColMapper {
 	
 	//<update id="update">
 	public int update(ColDTO dto);
-	
+
+	public int replyCreate(ColDTO dto);
+
+	public ArrayList<ColDTO> replyList(int b_no);
+	// <replyList = "List">
+
+	public int replyDelete(int r_no);
+	// <replyDelete = "reply">
 }
