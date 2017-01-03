@@ -37,13 +37,16 @@
 		<div class='bottom'>
 			<input type='button' 
 					value='수정'
-					onclick="location.href='./update.do?b_no=${dto.b_no }'">
+					onclick="location.href='./update.do?b_no=${dto.b_no }' ">
 			<input type='button' 
 					value='목록'
 					onclick="location.href='./list.do'">
 			<input type='button' 
 					value='삭제'
-					onclick="location.href='./delete.do?b_no=${dto.b_no }'">
+					onclick="location.href='./delete.do?b_no=${dto.b_no }' ">
+			<input type='button' 
+					value='답변글 쓰기'
+					onclick="location.href='./rlpCreate.do?b_no=${dto.b_no }&b_origin=${dto.b_origin}&b_reply=${dto.b_reply}' ">
 		</div>		
 	</FORM>
 	

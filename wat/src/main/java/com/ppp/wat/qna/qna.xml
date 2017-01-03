@@ -7,10 +7,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.ppp.wat.qna.QnaMapper">
 	<!-- QnA리스트 -->
 	<select id="list" resultType="QnaDTO">
-		SELECT b_code, b_no, b_origin, b_title, b_id,	b_recommend, b_readcnt, b_newdate
+		SELECT b_code, b_no, b_origin, b_reply, b_title, b_id,	b_recommend, b_readcnt, b_newdate
 		FROM board
 		WHERE b_code = 'qna'
-		ORDER BY b_no DESC
+		ORDER BY b_origin DESC, b_reply ASC
 	</select>
 
 	<!-- selectKey 태그의 order는 해당 쿼리문을 본 쿼리문 이전에 수행할 것인지, 이후에 수행할 것인지 정한다. -->
@@ -74,6 +74,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		DELETE FROM reply
 		WHERE r_no = #{r_no}
 	</delete>
+	
+	<!-- Qna ripCreate 등록-->
+		<insert id="rlpCreate">
+		<selectKey keyProperty="b_no" resultType="int" order="BEFORE">
+			SELECT IFNULL(MAX(b_no), 0)+1 as b_no
+			FROM board
+		</selectKey>
+		INSERT INTO board(b_code, b_no, b_origin, b_reply, b_id,
+		                              b_title, b_content, b_recommend, b_readcnt,
+		                              b_downcnt, b_newdate)
+		VALUES('qna', #{b_no},	#{b_origin}, ${b_reply}, #{b_id}, 
+		             #{b_title}, #{b_content}, 0, 0, 0, now())
+	</insert>
 	
 		
 

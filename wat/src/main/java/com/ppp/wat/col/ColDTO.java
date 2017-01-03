@@ -7,7 +7,7 @@ public class ColDTO {
 	private String b_code;				// not null								게시판 분류번호 qna-qna 칼럼-col
 	private int b_no;						// not null		PRIMARY KEY		게시글 번호
 	private int b_origin ;					// not null									부모글 번호
-	private int b_reply;						// not null DEFAULT 0					댓글 구분번호
+	private int b_reply;						// not null 		DEFAULT 0			답변글 구분번호
 	private String b_id;					// not null									아이디
 	private String b_title;					// not null 									제목
 	private String b_content;			// not null									내용

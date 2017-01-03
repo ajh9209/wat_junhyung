@@ -426,7 +426,7 @@ ALTER TABLE sproject
    
    ==============================================\
    
-   select * from reply;
+   select * from board;
    
    DELETE FROM reply
 		WHERE r_no = 4;

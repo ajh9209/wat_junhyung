@@ -7,8 +7,11 @@
 %>
 
 <!-- body start -------------------------------------->
-					<h3>Q&amp;A등록</h3>
-<FORM name="frm" method="post" action="./create.do">
+					<h3>Q&amp;A 답변글 등록</h3>
+<FORM name="frm" method="post" action="./rlpCreate.do">
+<input type="hidden" name="b_no" value="${b_no }">
+<input type="hidden" name="b_origin" value="${b_origin}">
+<input type="hidden" name="b_reply" value="${b_reply+1 }">
 
 		<table class='table'>
 			<tr>
@@ -17,7 +20,11 @@
 			</tr>
 			<tr>
 				<th>제목</th>
-				<td><input type="text" name="b_title" size="20"></td>
+				<td align="left">
+				<c:forEach var = "i" begin = "1" end ="${b_origin}" >
+				&nbsp;&nbsp;&nbsp;&nbsp;
+				</c:forEach>
+				<input type="text" name="b_title" size="20"></td>
 			</tr>
 			<tr>
 				<th>Q&amp;A내용</th>

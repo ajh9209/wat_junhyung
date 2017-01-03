@@ -35,5 +35,8 @@ public interface QnaMapper {
 
 	public int replyDelete(int r_no);
 	// <replyDelete = "reply">
+
+	public int rlpCreate(QnaDTO dto);
+	// <rlpCreate = "List">
 	
 }

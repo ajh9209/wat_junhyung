@@ -29,11 +29,6 @@
 					<td>${dto.b_readcnt }</td>
 					<td>${dto.b_id }</td>
 					<td>${dto.b_newdate }</td>
-					<td><input type="button" value="수정"
-						onclick="window.location.href='./update.do?b_no=${dto.b_no }'">
-						<input type="button" value="삭제"
-						onclick="window.location.href='./delete.do?b_no=${dto.b_no }'">
-					</td>
 				</tr>
 			</c:forEach>
 

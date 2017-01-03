@@ -119,5 +119,25 @@ public class QnaCont {
 		mav.setViewName("redirect:/qna/read.do?b_no=" + dto.getR_bno()); // /qna/read.do
 		return mav;
 	}// replyDeleteProc() end
+	
+	@RequestMapping(value = "/qna/rlpCreate.do", method = RequestMethod.GET)
+	public ModelAndView rlpCreateForm(QnaDTO dto) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("/qna/rlpCreateForm"); // /qna/createForm.jsp
+		mav.addObject("b_no", dto.getB_no()); // 부모그룹번호
+		mav.addObject("b_origin", dto.getB_origin()); // 부모그룹번호
+		mav.addObject("b_reply", dto.getB_reply()); // 부모그룹번호
+		return mav;
+	}// rlpCreateForm() end
+
+	@RequestMapping(value = "/qna/rlpCreate.do", method = RequestMethod.POST)
+	public ModelAndView rlpCreateProc(QnaDTO dto, HttpServletRequest req) {
+		ModelAndView mav = new ModelAndView();
+		int count = dao.rlpCreate(dto);
+		mav.setViewName("redirect:/qna/list.do"); // /qna/list.do
+		return mav;
+	}// rlpCreateProc() end
+	
+	
 }
 

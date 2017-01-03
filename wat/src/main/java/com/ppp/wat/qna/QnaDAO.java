@@ -101,6 +101,13 @@ public class QnaDAO {
 				int count = mapper.replyDelete(r_no);
 				return count;
 			}
+
+
+			public int rlpCreate(QnaDTO dto) {
+				QnaMapper mapper = sqlSession.getMapper(QnaMapper.class);
+				int count = mapper.rlpCreate(dto);
+				return count;
+			}
 		
 	
 	
