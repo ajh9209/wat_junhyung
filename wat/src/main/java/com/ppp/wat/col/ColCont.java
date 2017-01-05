@@ -1,6 +1,8 @@
 package com.ppp.wat.col;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -21,14 +23,14 @@ public class ColCont {
 	}
 
 	// 결과확인 http://localhost:9090/col/list.do
-	@RequestMapping("/col/list.do")
+/*	@RequestMapping("/col/list.do")
 	public ModelAndView list() {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("col/list");
 		ArrayList<ColDTO> list = dao.list();
 		mav.addObject("list", list);
 		return mav;
-	}// list() end
+	}// list() end */
 
 	@RequestMapping(value = "/col/create.do", method = RequestMethod.GET)
 	public ModelAndView createForm(ColDTO dto) {
@@ -116,4 +118,40 @@ public class ColCont {
 		mav.setViewName("redirect:/col/read.do?b_no=" + dto.getR_bno()); // /col/read.do
 		return mav;
 	}// replyDeleteProc() end
+	
+
+	@RequestMapping("/col/list.do")
+	public ModelAndView list(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("col/list");
+
+		// 검색
+		String sch_type = request.getParameter("sch_type");
+		String sch_value = request.getParameter("sch_value");
+
+		System.out.println("Cont sch_type : " + sch_type);
+		System.out.println("Cont sch_value : " + sch_value);
+
+		HashMap<String, Object> hashMap = new HashMap<String, Object>();
+		hashMap.put("sch_type", sch_type);
+		hashMap.put("sch_value", sch_value);
+
+
+		ArrayList<ColDTO> list = dao.list_search(hashMap); //검색
+		
+		Iterator<ColDTO> iter = list.iterator();
+		while(iter.hasNext() == true){
+			ColDTO dto = iter.next();
+			dto.setB_newdate(dto.getB_newdate().substring(0,10));
+		}
+		
+		mav.addObject("list", list);
+
+		System.out.println("list : " + list);
+		
+		return mav;
+	}// list() end
+
+
+	
 }

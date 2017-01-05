@@ -88,6 +88,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		             #{b_title}, #{b_content}, 0, 0, 0, now())
 	</insert>
 	
+	<!--  검색 리스트 -->
+	<select id="list_search" resultType="QnaDTO" parameterType="HashMap">
+		SELECT b_code, b_no, b_origin, b_title, b_id,	b_recommend, b_readcnt, b_newdate
+		FROM board
+		WHERE b_code = 'qna'
+		<choose>
+			<when test="sch_type == 'b_title'"> AND  b_title like CONCAT('%', #{sch_value} , '%')
+			</when>
+			<when test="sch_type == 'b_content'"> AND  b_content like CONCAT('%', #{sch_value} , '%')
+			</when>
+			<when test="sch_type == 'b_id'"> AND  b_id like CONCAT('%', #{sch_value} , '%')
+			</when>
+		</choose>
+		ORDER BY b_no DESC
+	</select>
 		
 
 </mapper>

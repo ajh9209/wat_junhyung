@@ -2,6 +2,7 @@ package com.ppp.wat.col;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.io.Resources;
@@ -97,6 +98,17 @@ public class ColDAO {
 			int count = mapper.replyDelete(r_no);
 			return count;
 		}
+
+
+		//검색 후 리스트
+		ArrayList<ColDTO> list_search(HashMap hashMap) {
+			ColMapper mapper = sqlSession.getMapper(ColMapper.class);
+			ArrayList<ColDTO> list = mapper.list_search(hashMap);				
+			
+			System.out.println("ColDTO " + hashMap);
+			
+			return list;			
+		}// list_search() end
 	
 	
 	

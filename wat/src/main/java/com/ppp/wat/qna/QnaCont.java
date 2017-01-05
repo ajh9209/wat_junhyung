@@ -1,6 +1,8 @@
 package com.ppp.wat.qna;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -24,14 +26,14 @@ public class QnaCont {
 	}
 
 	// 결과확인 http://localhost:9090/qna/list.do
-	@RequestMapping("/qna/list.do")
+/*	@RequestMapping("/qna/list.do")
 	public ModelAndView list() {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("qna/list");
 		ArrayList<QnaDTO> list = dao.list();
 		mav.addObject("list", list);
 		return mav;
-	}// list() end
+	}// list() end */
 
 	@RequestMapping(value = "/qna/create.do", method = RequestMethod.GET)
 	public ModelAndView createForm(QnaDTO dto) {
@@ -137,6 +139,38 @@ public class QnaCont {
 		mav.setViewName("redirect:/qna/list.do"); // /qna/list.do
 		return mav;
 	}// rlpCreateProc() end
+	
+	@RequestMapping("/qna/list.do")
+	public ModelAndView list(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("qna/list");
+		
+	// 검색
+	String sch_type = request.getParameter("sch_type");
+	String sch_value = request.getParameter("sch_value");
+
+	System.out.println("Cont sch_type : " + sch_type);
+	System.out.println("Cont sch_value : " + sch_value);
+
+	HashMap<String, Object> hashMap = new HashMap<String, Object>();
+	hashMap.put("sch_type", sch_type);
+	hashMap.put("sch_value", sch_value);
+
+
+	ArrayList<QnaDTO> list = dao.list_search(hashMap); //검색
+	
+	Iterator<QnaDTO> iter = list.iterator();
+	while(iter.hasNext() == true){
+		QnaDTO dto = iter.next();
+		dto.setB_newdate(dto.getB_newdate().substring(0,10));
+	}
+	
+	mav.addObject("list", list);
+
+	System.out.println("list : " + list);
+	
+	return mav;
+}// list() end
 	
 	
 }

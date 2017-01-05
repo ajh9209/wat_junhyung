@@ -1,6 +1,7 @@
 package com.ppp.wat.col;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public interface ColMapper {
 	
@@ -33,4 +34,6 @@ public interface ColMapper {
 
 	public int replyDelete(int r_no);
 	// <replyDelete = "reply">
+	
+	public ArrayList<ColDTO> list_search(HashMap hashmap);
 }

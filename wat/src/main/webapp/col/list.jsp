@@ -35,11 +35,32 @@
 		</TABLE>
 
 		<DIV class='bottom'>
-			<input type='button' value='글쓰기'
+			<input type='button' value='글쓰기' style='float: right;'
 				onclick="location.href='./create.do'">
 		</DIV>
 	</FORM>
-				
+	
+	<form id="form_search" name="form_search" method="get"
+	action="./list.do">
+	<select id="sch_type" name="sch_type">
+		<option value="b_title" selected="selected">제목</option>
+		<option value="b_content">내용</option>
+		<option value="b_id">작성자</option>
+	</select> <input type="text" id="sch_value" name="sch_value" />
+	<button type="button" onclick="search();">검색</button>
+</form>
+
+<script>
+	function search() {
+		var sch_value = jQuery('#form_search #sch_value').val();
+		if (sch_value == '') {
+			alert('검색어를 입력하세요.');
+		} else {
+			jQuery('#form_search').submit();
+		}
+	}
+	jQuery('#form_search #sch_type value').val('${mapSearch.sch_type}');
+</script>				
 				
 					
 <!-- body end -------------------------------------->

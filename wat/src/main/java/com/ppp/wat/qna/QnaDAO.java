@@ -2,6 +2,7 @@ package com.ppp.wat.qna;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.io.Resources;
@@ -11,6 +12,8 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.ppp.wat.col.ColDTO;
+import com.ppp.wat.col.ColMapper;
 import com.ppp.wat.qna.QnaDTO;
 import com.ppp.wat.qna.QnaMapper;
 
@@ -109,6 +112,15 @@ public class QnaDAO {
 				return count;
 			}
 		
+			//검색 후 리스트
+			ArrayList<QnaDTO> list_search(HashMap hashMap) {
+				QnaMapper mapper = sqlSession.getMapper(QnaMapper.class);
+				ArrayList<QnaDTO> list = mapper.list_search(hashMap);				
+				
+				System.out.println("QnaDTO " + hashMap);
+				
+				return list;			
+			}// list_search() end
 	
 	
 	

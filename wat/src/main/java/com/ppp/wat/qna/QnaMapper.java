@@ -1,7 +1,9 @@
 package com.ppp.wat.qna;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
+import com.ppp.wat.col.ColDTO;
 import com.ppp.wat.qna.QnaDTO;
 
 public interface QnaMapper {
@@ -38,5 +40,7 @@ public interface QnaMapper {
 
 	public int rlpCreate(QnaDTO dto);
 	// <rlpCreate = "List">
+	
+	public ArrayList<QnaDTO> list_search(HashMap hashmap);
 	
 }

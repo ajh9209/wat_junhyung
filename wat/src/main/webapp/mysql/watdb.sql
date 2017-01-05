@@ -424,9 +424,36 @@ ALTER TABLE sproject
    on update cascade
    on delete cascade;
    
-   ==============================================\
+   ==============================================
    
-   select * from board;
+-- 추가 변경사항 (01/04)
+   -- Spapply 테이블의 기존 spa_no컬럼을 spa_spno로 변경 (프로젝트 번호 저장되는 컬럼)
+   ALTER TABLE spapply
+   CHANGE COLUMN spa_no spa_spno int null
+   -- Spapply 테이블에 spa_no를 원래 기본키로 설정
+   ALTER TABLE spapply
+   ADD COLUMN spa_no INT   NOT NULL primary key
+   -- Spmember 테이블에 팀원ID 컬럼 추가
+   ALTER TABLE spmember
+   ADD COLUMN spm_id VARCHAR(15) NOT NULL
+   -- Spmember 테이블의 ID를 Member 테이블의 ID와 외래키 관계 설정
+   ALTER TABLE spmember
+         ADD CONSTRAINT FK_spmember_TO_member
+         FOREIGN KEY (
+            spm_id
+         )
+         REFERENCES member (
+            m_id
+         )
+         on update cascade
+         on delete cascade;
+   -- Spmember 테이블의 기존 spm_no를 spm_spno로 변경(프로젝트 번호 담는 컬럼)
+   ALTER TABLE spmember
+   CHANGE COLUMN spm_no spm_spno int not null
+   
+   ==============================================
+   
+   select * from spmember;
    
    DELETE FROM reply
 		WHERE r_no = 4;
