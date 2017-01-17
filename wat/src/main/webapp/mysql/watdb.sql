@@ -10,7 +10,7 @@ CREATE TABLE member(		-- 회원가입 Tb
 	m_lang		VARCHAR(50)		not null,					
 	m_level		VARCHAR(10)		not null	default 'company',	
 	m_newdate	DATETIME		not null,					
-	m_editdate	DATETIME		null						
+	m_editdate	DATETIME		null			
 );
 
 CREATE TABLE spmember(		-- sp팀원(스터디/프로젝트 진행중인 팀원) Tb
@@ -457,3 +457,27 @@ ALTER TABLE sproject
    
    DELETE FROM reply
 		WHERE r_no = 4;
+		
+	
+select * from reply
+where b_code='qna'
+
+INSERT into 
+member(m_no, m_name, m_id, m_pw, m_nick, m_email, m_phone,
+      m_job, m_lang, m_level, m_newdate, m_editdate )
+values(1, '김나영', 'soldesk', 'soldesk', '의뢰인', 'nyk18@naver.com', '01062288024',
+      '대학생', 'C, JAVA, Android', 'company', now(), null);
+      
+      SELECT b_code, b_no, b_origin, b_reply, b_title, b_id,	b_recommend, b_readcnt, b_newdate
+		from (
+		select @rnum := @rnum + 1 AS rownum, board.*
+		FROM (
+		select @rnum := 0
+		)
+		r, board
+		WHERE b_code = 'qna'
+		ORDER BY b_origin DESC, b_reply ASC
+		) result
+		WHERE rownum BETWEEN 6 AND 10
+		
+		

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- interface MemberMapper{} -->
+<mapper namespace="com.ppp.wat.memberLogin.MemberLoginMapper" >
+
+	<insert id="create" parameterType="MemberLoginDTO">
+	<selectKey keyProperty="m_no" resultType="int" order="BEFORE">
+			SELECT
+			IFNULL(MAX(m_no),0)+1 as m_no
+			FROM member
+		</selectKey>
+		INSERT INTO member(m_no, m_name, m_id, m_pw, m_nick, m_email, m_phone, m_job, m_lang, m_level, m_newdate)
+		VALUES(#{m_no}, #{m_name}, #{m_id}, #{m_pw}, #{m_nick}, #{m_email}, #{m_phone}, #{m_job}, #{m_lang}, #{m_level}, now() )
+	</insert>
+	
+	<select id="check" parameterType="MemberLoginDTO" resultType="MemberLoginDTO">
+		SELECT m_nick, m_id, m_level 
+		FROM member
+		WHERE m_id=#{m_id} AND m_pw=#{m_pw}
+	</select>
+</mapper> 

@@ -23,8 +23,40 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
+	   <!-- 인터셉터 설정 -->
+   <interceptors>
+      <interceptor>
+         <mapping path="/**" />
+         <exclude-mapping path="/memberLogin/login.do" /> <!-- 로그인페이지 제외 -->
+         <exclude-mapping path="/memberLogin/agreement.do" />
+         <exclude-mapping path="/memberLogin/create.do" />
+         <exclude-mapping path="/memberLogin/test.do" />
+         <exclude-mapping path="/home.do" />
+         <exclude-mapping path="/css/aa.css" />
+         <exclude-mapping path=" / " />
+         <!-- 여러개 컨트롤러 추가 가능 <mvc:mapping path="/admin_write"/> <mvc:mapping path="/admin_update"/> 
+            <mvc:mapping path="/admin_delete"/> . . . 로그인체크 인터셉터 클래스 -->
+         <beans:bean class="com.ppp.wat.interceptor.SessionCheckHandler" />
+
+      </interceptor>
+   </interceptors>
+	
+	<!-- MultipartResolver Bean -->
+<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+</beans:bean>
+
+ <resources location="/upload/" mapping="/upload/**"></resources>
+ 
+  <!-- 파일 다운로드 BeanNameViewResolver -->
+   <beans:bean id="editorFileDown" class="net.utility.EditorFileDown"></beans:bean> 
+   <beans:bean id="fileViewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver">
+      <beans:property name="order" value="0"></beans:property>
+   </beans:bean>
+	
 	<context:component-scan base-package="com.ppp.wat" />
 	
 	
 	
 </beans:beans>
+
+

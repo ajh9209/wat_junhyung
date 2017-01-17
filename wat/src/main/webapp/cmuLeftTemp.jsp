@@ -1,4 +1,4 @@
-	<%@ page contentType="text/html; charset=UTF-8"%>
+	<%@ page contentType="text/html; charset=utf-8"%>
 		<div class="col-md-2">
 			<div class="span3 sidebar">
 				<h4>community</h4>

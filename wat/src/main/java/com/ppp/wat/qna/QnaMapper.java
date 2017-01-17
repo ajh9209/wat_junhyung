@@ -15,7 +15,9 @@ public interface QnaMapper {
 	// notice.xml의 
 	// <select id="list" resultType="NoticeDTO"> 
 	// 아이디와 메서드명이 동일해야 한다.
-	public ArrayList<QnaDTO> list();
+	public ArrayList<QnaDTO> list(QnaDTO dto);
+	
+	public int count(QnaDTO dto);
 	
 	//<insert id="create">
 	public int create(QnaDTO dto);
@@ -27,20 +29,24 @@ public interface QnaMapper {
 	//<delete id="delete" >
 	public int delete(int b_no);
 	
+	public void increment(int b_no);//조회 수
+	
+	public int recommend(int b_no); // 추천수
+	
+	
 	//<update id="update">
 	public int update(QnaDTO dto);
 	
 	public int replyCreate(QnaDTO dto);
-
+	// 댓글 쓰기
+	
 	public ArrayList<QnaDTO> replyList(int b_no);
-	// <replyList = "List">
+	// <replyList = "List" 댓글리스트>
 
 	public int replyDelete(int r_no);
-	// <replyDelete = "reply">
+	// <replyDelete = "reply" 댓글삭제>
 
 	public int rlpCreate(QnaDTO dto);
-	// <rlpCreate = "List">
-	
-	public ArrayList<QnaDTO> list_search(HashMap hashmap);
+	// <rlpCreate = "List" 덧글>
 	
 }

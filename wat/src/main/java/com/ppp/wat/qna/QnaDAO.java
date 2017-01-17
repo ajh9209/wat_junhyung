@@ -42,7 +42,7 @@ public class QnaDAO {
 		System.out.println("QnaDAO() 객체 생성됨");
 	}
 
-	
+	/*
 	//qna 리스트
 	ArrayList<QnaDTO> list() {
 		// interface QnaMapper{}
@@ -51,7 +51,7 @@ public class QnaDAO {
 		return list;
 
 	}// list() end
-
+*/
 	
 	//qna 등록
 	int create(QnaDTO dto){
@@ -61,12 +61,19 @@ public class QnaDAO {
 	}// create() end
 	
 	
-	//qna 조회
+	//qna 상세보기
 	QnaDTO read(int b_no){
 		QnaMapper mapper = sqlSession.getMapper(QnaMapper.class);
-		QnaDTO dto = mapper.read(b_no);
-		return dto;
+		increment(b_no);
+		return mapper.read(b_no);
 	}// create() end
+	
+	//조회수
+			public void increment(int b_no){
+				QnaMapper mapper = sqlSession.getMapper(QnaMapper.class);
+				mapper.increment(b_no);
+			}
+		
 	
 	
 	//qna 삭제
@@ -82,7 +89,13 @@ public class QnaDAO {
 		int count = mapper.update(dto);
 		return count;
 	}
-
+	
+	//추천수
+			public int recommend(int b_no){
+				QnaMapper mapper = sqlSession.getMapper(QnaMapper.class);
+				int count = mapper. recommend(b_no);
+				return count;
+			}
 
 	//댓글등록
 		public int replyCreate(QnaDTO dto) {
@@ -99,7 +112,7 @@ public class QnaDAO {
 		}
 		
 		//댓글 삭제
-			int replyDelete(int r_no){
+		public int replyDelete(int r_no){
 				QnaMapper mapper = sqlSession.getMapper(QnaMapper.class);
 				int count = mapper.replyDelete(r_no);
 				return count;
@@ -113,14 +126,28 @@ public class QnaDAO {
 			}
 		
 			//검색 후 리스트
-			ArrayList<QnaDTO> list_search(HashMap hashMap) {
-				QnaMapper mapper = sqlSession.getMapper(QnaMapper.class);
-				ArrayList<QnaDTO> list = mapper.list_search(hashMap);				
+			ArrayList<QnaDTO> list_search(QnaDTO dto) {
 				
-				System.out.println("QnaDTO " + hashMap);
+				/*int nowPage = 1;				//현재 클릭 페이지
+				if(dto.getNowPage() != 0) nowPage = dto.getNowPage();
+				int recordPerPage = 5; 	*/
+				
+				/*dto.setStartRow(((nowPage-1) * recordPerPage) + 1); // (0 * 10) + 1 = 1, 11, 21
+				dto.setEndRow(nowPage * recordPerPage);             // 1 * 10 = 10, 20, 30
+*/				
+				QnaMapper mapper = sqlSession.getMapper(QnaMapper.class);
+				ArrayList<QnaDTO> list = mapper.list(dto);				
+				
+				System.out.println("QnaDTO " + dto);
 				
 				return list;			
 			}// list_search() end
+			
+			public int count(QnaDTO dto){		
+				QnaMapper mapper = sqlSession.getMapper(QnaMapper.class);
+				int count = mapper.count(dto);
+				return count;		
+			}//list() end
 	
 	
 	

@@ -5,13 +5,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <!-- interface QnaMapper{} mapper를 관리하는 인터페이스 -->
 <mapper namespace="com.ppp.wat.qna.QnaMapper">
-	<!-- QnA리스트 -->
+	<!-- QnA리스트 
 	<select id="list" resultType="QnaDTO">
 		SELECT b_code, b_no, b_origin, b_reply, b_title, b_id,	b_recommend, b_readcnt, b_newdate
 		FROM board
 		WHERE b_code = 'qna'
 		ORDER BY b_origin DESC, b_reply ASC
 	</select>
+	-->
 
 	<!-- selectKey 태그의 order는 해당 쿼리문을 본 쿼리문 이전에 수행할 것인지, 이후에 수행할 것인지 정한다. -->
 	<!-- QnA등록 -->
@@ -47,6 +48,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		UPDATE board
 		SET b_title = #{b_title}, b_content = #{b_content}
 		WHERE b_no = #{b_no}	
+	</update>
+	
+	<!-- Qna조회수 -->
+	<update id="increment" parameterType="ColDTO">
+		UPDATE board
+		SET b_readcnt = b_readcnt+1
+		WHERE b_no = #{b_no }
+	</update>
+
+
+	<!-- Qna추천수 -->
+	<update id="recommend" parameterType="int">
+		UPDATE board
+		SET
+		b_recommend = b_recommend+1
+		WHERE b_no = #{b_no }
 	</update>
 	
 	<!-- Qna reply 삽입 -->
@@ -89,9 +106,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<!--  검색 리스트 -->
-	<select id="list_search" resultType="QnaDTO" parameterType="HashMap">
-		SELECT b_code, b_no, b_origin, b_title, b_id,	b_recommend, b_readcnt, b_newdate
-		FROM board
+	<select id="list" resultType="QnaDTO" parameterType="QnaDTO">
+		SELECT b_code, b_no, b_origin, b_reply, b_title, b_id,	b_recommend, b_readcnt, b_newdate
+		from (
+		select @rnum := @rnum + 1 AS rownum, board.*
+		FROM (
+		select @rnum := 0
+		)
+		r, board
 		WHERE b_code = 'qna'
 		<choose>
 			<when test="sch_type == 'b_title'"> AND  b_title like CONCAT('%', #{sch_value} , '%')
@@ -101,8 +123,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<when test="sch_type == 'b_id'"> AND  b_id like CONCAT('%', #{sch_value} , '%')
 			</when>
 		</choose>
-		ORDER BY b_no DESC
+		ORDER BY b_origin DESC, b_reply ASC
+		) result
+		WHERE rownum BETWEEN #{startRow } AND #{endRow }
 	</select>
 		
+		<select id="count" resultType="int">
+		SELECT COUNT(*) as cnt
+		FROM board
+		WHERE b_code = 'qna'
+		<choose>
+			<when test="sch_type == 'b_title'"> AND b_title like CONCAT('%', #{sch_value} , '%')
+			</when>
+			<when test="sch_type == 'b_content'"> AND b_content like CONCAT('%', #{sch_value} ,
+				'%')
+			</when>
+			<when test="sch_type == 'b_id'"> AND b_id like CONCAT('%', #{sch_value} , '%')
+			</when>
+		</choose>
+	</select>
 
 </mapper>

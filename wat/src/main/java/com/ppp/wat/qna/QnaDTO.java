@@ -16,11 +16,20 @@ public class QnaDTO {
 	private int b_downcnt;				// not null DEFAULT 0					다운로드수 
 	private String b_newdate;			// not null									등록일
 	private String b_editdate;			// null										수정일
+	
 	private int r_no;          		 		//  not null	 	 PRIMARY KEY		댓글번호
 	private int r_bno;		           		 // not null									댓글의 부모번호
  	private String	 r_id;     			//  VARCHAR(15) 	  not null		댓글 아이디
  	private String	 r_content ; 		//  VARCHAR(5000)	 not null		댓글
  	private String r_date;     		// DATETIME     	 not null				댓글 등록날짜
+ 	
+ 	private int nowPage;
+	private int startRow;
+	private int endRow;
+	
+	private String sch_type;
+	private String sch_value;
+ 	
 	public QnaDTO() {	}
 	public String getB_code() {
 		return b_code;
@@ -123,6 +132,36 @@ public class QnaDTO {
 	}
 	public void setR_date(String r_date) {
 		this.r_date = r_date;
+	}
+	public int getNowPage() {
+		return nowPage;
+	}
+	public void setNowPage(int nowPage) {
+		this.nowPage = nowPage;
+	}
+	public int getStartRow() {
+		return startRow;
+	}
+	public void setStartRow(int startRow) {
+		this.startRow = startRow;
+	}
+	public int getEndRow() {
+		return endRow;
+	}
+	public void setEndRow(int endRow) {
+		this.endRow = endRow;
+	}
+	public String getSch_type() {
+		return sch_type;
+	}
+	public void setSch_type(String sch_type) {
+		this.sch_type = sch_type;
+	}
+	public String getSch_value() {
+		return sch_value;
+	}
+	public void setSch_value(String sch_value) {
+		this.sch_value = sch_value;
 	}	
 	
 	

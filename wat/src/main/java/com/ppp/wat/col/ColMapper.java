@@ -12,7 +12,9 @@ public interface ColMapper {
 	// notice.xml의 
 	// <select id="list" resultType="ColDTO"> 
 	// 아이디와 메서드명이 동일해야 한다.
-	public ArrayList<ColDTO> list();
+	public ArrayList<ColDTO> list(ColDTO dto);
+	
+	public int count(ColDTO dto);
 	
 	//<insert id="create">
 	public int create(ColDTO dto);
@@ -24,16 +26,20 @@ public interface ColMapper {
 	//<delete id="delete" >
 	public int delete(int b_no);
 	
+	public void increment(int b_no);//조회 수
+	
+	public int recommend(int b_no); // 추천수
+	
 	//<update id="update">
 	public int update(ColDTO dto);
-
+	
 	public int replyCreate(ColDTO dto);
-
+	// 댓글쓰기
+	
 	public ArrayList<ColDTO> replyList(int b_no);
-	// <replyList = "List">
+	// <replyList = "List" 댓글 목록>
 
 	public int replyDelete(int r_no);
-	// <replyDelete = "reply">
+	// <replyDelete = "reply" 댓글삭제>
 	
-	public ArrayList<ColDTO> list_search(HashMap hashmap);
 }

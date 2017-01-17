@@ -12,6 +12,10 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.ppp.wat.qna.QnaMapper;
+
+
+
 @Component
 public class ColDAO {
 
@@ -37,7 +41,7 @@ public class ColDAO {
 		System.out.println("ColDAO() 객체 생성됨");
 	}
 
-	
+	/*
 	//칼럼 리스트
 	ArrayList<ColDTO> list() {
 		// interface ColMapper{}
@@ -47,7 +51,7 @@ public class ColDAO {
 
 	}// list() end
 
-	
+*/	
 	//칼럼 등록
 	int create(ColDTO dto){
 		ColMapper mapper = sqlSession.getMapper(ColMapper.class);
@@ -56,12 +60,18 @@ public class ColDAO {
 	}// create() end
 	
 	
-	//칼럼 조회
+	//칼럼 상세보기
 	ColDTO read(int b_no){
 		ColMapper mapper = sqlSession.getMapper(ColMapper.class);
-		ColDTO dto = mapper.read(b_no);
-		return dto;
+		increment(b_no);
+		return mapper.read(b_no);
 	}// create() end
+	
+	//조회수
+	public void increment(int b_no){
+	ColMapper mapper = sqlSession.getMapper(ColMapper.class);
+		mapper.increment(b_no);
+	}
 	
 	
 	//칼럼 삭제
@@ -77,6 +87,13 @@ public class ColDAO {
 		int count = mapper.update(dto);
 		return count;
 	}
+	
+	//추천수
+		public int recommend(int b_no){
+			ColMapper mapper = sqlSession.getMapper(ColMapper.class);
+			int count = mapper. recommend(b_no);
+			return count;
+		}
 
 	//댓글등록
 	public int replyCreate(ColDTO dto) {
@@ -93,7 +110,7 @@ public class ColDAO {
 	}
 	
 	//댓글 삭제
-		int replyDelete(int r_no){
+	public int replyDelete(int r_no){
 			ColMapper mapper = sqlSession.getMapper(ColMapper.class);
 			int count = mapper.replyDelete(r_no);
 			return count;
@@ -101,14 +118,30 @@ public class ColDAO {
 
 
 		//검색 후 리스트
-		ArrayList<ColDTO> list_search(HashMap hashMap) {
-			ColMapper mapper = sqlSession.getMapper(ColMapper.class);
-			ArrayList<ColDTO> list = mapper.list_search(hashMap);				
+		ArrayList<ColDTO> list_search(ColDTO dto) {
 			
-			System.out.println("ColDTO " + hashMap);
+			/*int nowPage = 1;				//현재 클릭 페이지
+			if(dto.getNowPage() != 0) nowPage = dto.getNowPage();
+			int recordPerPage = 5; 	*/
+			
+			/*dto.setStartRow(((nowPage-1) * recordPerPage) + 1); // (0 * 10) + 1 = 1, 11, 21
+			dto.setEndRow(nowPage * recordPerPage);             // 1 * 10 = 10, 20, 30
+*/				
+			ColMapper mapper = sqlSession.getMapper(ColMapper.class);
+			ArrayList<ColDTO> list = mapper.list(dto);				
+			
+			System.out.println("ColDTO " + dto);
 			
 			return list;			
 		}// list_search() end
+		
+		public int count(ColDTO dto){		
+			ColMapper mapper = sqlSession.getMapper(ColMapper.class);
+			int count = mapper.count(dto);
+			return count;		
+		}//list() end
+		
+		
 	
 	
 	

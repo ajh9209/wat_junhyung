@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page contentType="text/html; charset=utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="../header.jsp"%>
 <%@ include file="../cmuLeftTemp.jsp" %>
@@ -29,6 +29,14 @@
 					<td>${dto.b_content }</td>
 				</tr>
 				<tr>
+					<th>조회수</th>
+					<td>${dto.b_readcnt }</td>
+				</tr>
+				<tr>
+					<th>추천수</th>
+					<td>${dto.b_recommend }</td>
+				</tr>
+				<tr>
 					<th>등록일</th>
 					<td>${dto.b_newdate }</td>
 				</tr>
@@ -44,6 +52,9 @@
 			<input type='button' 
 					value='삭제'
 					onclick="location.href='./delete.do?b_no=${dto.b_no }' ">
+	       <input type='button' 
+					value='추천'
+					onclick="reCommend(${dto.b_no })">
 			<input type='button' 
 					value='답변글 쓰기'
 					onclick="location.href='./rlpCreate.do?b_no=${dto.b_no }&b_origin=${dto.b_origin}&b_reply=${dto.b_reply}' ">
@@ -62,34 +73,35 @@
 	</table>
 </FORM>
 
-<table class = 'table'	>
-<c:forEach var="dto" items="${list }">			
-				<tr>
+<table class='table'>
+	<c:forEach var="dto" items="${list }">
+		<tr>
 
-					<td>${dto.r_id }</td>		
-					<td>${dto.r_content }</td>
-					<td>${dto.r_date }</td>
-					<td>
-						<form id="replyDeletefrm" action="replyDelete.do" method="POST">
-							<input type="hidden" name="r_no"  value="${dto.r_no }">
-							<input type="hidden" name="r_bno"  value="${dto.r_bno }">
-							<input type="button" value="삭제" onclick="replyDeleteFrom(${dto.r_no }, ${dto.r_bno } )">
-						</form>
-					</td>	
-				</tr>				
-			</c:forEach>
-			</table>
+			<td>${dto.r_id }</td>
+			<td>${dto.r_content }</td>
+			<td>${dto.r_date }</td>
+			<td><input type="button" value="삭제"
+				onclick="replyDeleteFrom(${dto.r_no },${dto.r_bno } )"></td>
+		</tr>
+	</c:forEach>
+</table>
 
 <!-- body end -------------------------------------->
 <script>
 function replyDeleteFrom(r_no, r_bno){
-	    if (confirm("삭제하시겠습니까?!") == true) {
-	    	document.getElementById("replyDeletefrm").submit();
+	    if (confirm(r_no+"삭제하시겠습니까?!") == true) {
+	    	location.href = "./replyDelete.do?r_no="+r_no+"&r_bno="+r_bno;
 	    } else {
 	    	window.close();
 	    }
-	
-	
+}
+
+function reCommend(b_no){
+	 if(confirm("추천하시겠습니까?") == true) {
+		location.href = "./recommend.do?b_no="+b_no;
+   } else {
+   	window.close();
+   } 
 }
 
 </script>
